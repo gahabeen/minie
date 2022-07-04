@@ -50,7 +50,7 @@ export const ByteArray = {
     },
 };
 
-export const isCompressed = (str: string): boolean => {
+export const isCompressed = (str: any): boolean => {
     return (typeof str === 'string' && str.startsWith(MINIE_SHORT_PREFIX));
 };
 
