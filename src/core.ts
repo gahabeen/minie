@@ -1,5 +1,6 @@
-import { compressSync, decompressSync } from 'fflate';
+import { compressSync, decompressSync, GzipOptions } from 'fflate';
 import { MINIE_SHORT_PREFIX } from './consts';
+import { ReallyAny } from './type';
 
 export const Text = {
     toByteArray(str: string): Uint8Array {
@@ -42,30 +43,30 @@ export const Byte = {
 };
 
 export const ByteArray = {
-    toShortString: (arr: Uint8Array): string => {
-        return Array.from(arr).map((x) => Byte.toChar(x)).join('');
+    toShortString: (data: Uint8Array): string => {
+        return Array.from(data).map((x) => Byte.toChar(x)).join('');
     },
-    toString(arr: Uint8Array): string {
-        return Buffer.from(arr).toString();
+    toString(data: Uint8Array): string {
+        return Buffer.from(data).toString();
     },
 };
 
-export const isCompressed = (str: any): boolean => {
-    return (typeof str === 'string' && str.startsWith(MINIE_SHORT_PREFIX));
+export const isCompressed = (value: ReallyAny): boolean => {
+    return (typeof value === 'string' && value.startsWith(MINIE_SHORT_PREFIX));
 };
 
-export const compress = (str: string): string => {
+export const compress = (str: string, opts: GzipOptions = { level: 9, mem: 6 }): string => {
     const arr = Text.toByteArray(str);
-    const compressed = ByteArray.toShortString(compressSync(arr, { level: 9 }));
+    const compressed = ByteArray.toShortString(compressSync(arr, opts));
 
     if (str.length <= compressed.length) return str;
     return `${MINIE_SHORT_PREFIX}${compressed}`;
 };
 
-export const decompress = (str: string): string => {
+export const decompress = (str: string, out?: Uint8Array): string => {
     if (!isCompressed(str)) return str;
 
     const arr = ShortString.toByteArray(str.slice(MINIE_SHORT_PREFIX.length));
-    const decompressed = decompressSync(arr);
+    const decompressed = decompressSync(arr, out);
     return ByteArray.toString(decompressed);
 };
