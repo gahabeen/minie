@@ -1,5 +1,21 @@
-# minie
+<br>
+
+![Mini Illustration](media/banner.jpg)
+
+<br>
+
     Yet another simple string compressor
+
+`npm i minie` / `yarn add minie`
+
+[![Version](https://img.shields.io/npm/v/minie?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/minie)
+[![Downloads](https://img.shields.io/npm/dt/minie.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/minie)
+
+Minie's name comes from the name of our rescued cat. She came with her name, we kept it.
+
+### What is `minie`?
+- Two methods: `compress` & `decompress`.
+- You pass in a string, you get a shorter string.
 
 # Get started
 ```js
