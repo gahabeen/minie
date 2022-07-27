@@ -1,6 +1,6 @@
 import { compressSync, decompressSync, GzipOptions } from 'fflate';
-import { MINIE_SHORT_PREFIX } from './consts';
-import { ReallyAny } from './type';
+import { MINIE_SHORT_PREFIX, MINIE_UID_PREFIX_LENGTH } from './consts';
+import { ReallyAny } from './types';
 
 export const Text = {
     toByteArray(str: string): Uint8Array {
@@ -18,6 +18,9 @@ export const CharCode = {
     toByte(i: number) {
         // eslint-disable-next-line no-nested-ternary
         return i - (i > 63743 ? 8517 : i > 159 ? 69 : i > 46 && i < 130 ? 35 : i > 40 && i < 46 ? 34 : i > 34 && i < 40 ? 33 : 32);
+    },
+    random() {
+        return Byte.toChar(Math.floor(Math.random() * 65535));
     },
 };
 
@@ -60,13 +63,15 @@ export const compress = (str: string, opts: GzipOptions = { level: 9, mem: 6 }):
     const compressed = ByteArray.toShortString(compressSync(arr, opts));
 
     if (str.length <= compressed.length) return str;
-    return `${MINIE_SHORT_PREFIX}${compressed}`;
+    // Make sure the uid is unique and of the right length
+    const uid = CharCode.random().slice(0, MINIE_UID_PREFIX_LENGTH);
+    return `${MINIE_SHORT_PREFIX}${uid}${compressed}`;
 };
 
 export const decompress = (str: string, out?: Uint8Array): string => {
     if (!isCompressed(str)) return str;
 
-    const arr = ShortString.toByteArray(str.slice(MINIE_SHORT_PREFIX.length));
+    const arr = ShortString.toByteArray(str.slice(MINIE_SHORT_PREFIX.length + MINIE_UID_PREFIX_LENGTH));
     const decompressed = decompressSync(arr, out);
     return ByteArray.toString(decompressed);
 };

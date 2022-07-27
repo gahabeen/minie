@@ -17,6 +17,10 @@ Minie's name comes from the name of our rescued cat. She came with her name, we 
 - Two methods: `compress` & `decompress`.
 - You pass in a string, you get a shorter string.
 
+### Gotchas
+- The method `compress` is not a pure function. Compressing several times the same input won't return the same output.
+- The method `decompress` is a pure function. Decompressing several times the same input will return the same output.
+
 # Get started
 ```js
 import { compress, decompress } from 'minie';
