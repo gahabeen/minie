@@ -1,4 +1,4 @@
-import { compress, decompress } from './core';
+import { compress, decompress, decompressDeep, compressRaw } from './core';
 
 export * from './core';
-export default { compress, decompress };
+export default { compress, decompress, decompressDeep, compressRaw };
