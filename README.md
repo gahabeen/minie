@@ -11,7 +11,7 @@
 [![Version](https://img.shields.io/npm/v/minie?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/minie)
 [![Downloads](https://img.shields.io/npm/dt/minie.svg?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/minie)
 
-Minie's name comes from the name of our rescued cat. She came with her name, we kept it.
+Minie's name comes from the name of our rescued cat (she came with her name).
 
 ### What is `minie`?
 - Two methods: `compress` & `decompress`.
